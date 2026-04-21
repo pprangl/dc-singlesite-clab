@@ -1,0 +1,181 @@
+name: dc-clab
+
+mgmt:
+  network: mgmt
+  ipv4-subnet: 10.14.14.0/24
+  ipv4-gw: 10.14.14.254
+
+topology:
+  groups:
+    arista:
+      kind: arista_ceos
+      image: arista/ceos:latest
+      enforce-startup-config: true
+  nodes:
+  # Clients
+    site1-ab1-client1:
+      group: arista
+      mgmt-ipv4: 10.14.14.80
+      startup-config: configs/arista-hosts.cfg
+      binds:
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab1-client1_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab1-client2:
+      group: arista
+      mgmt-ipv4: 10.14.14.81
+      startup-config: configs/arista-hosts.cfg
+      binds:
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab1-client2_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab2-client1:
+      group: arista
+      mgmt-ipv4: 10.14.14.82
+      startup-config: configs/arista-hosts.cfg
+      binds:
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab2-client1_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab2-client2:
+      group: arista
+      mgmt-ipv4: 10.14.14.83
+      startup-config: configs/arista-hosts.cfg
+      binds:
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab2-client2_ceos_config:/mnt/flash/ceos-config:ro
+    site1-fw1:
+      group: arista
+      mgmt-ipv4: 10.14.14.84
+      startup-config: configs/site1-fw1.cfg
+      binds:
+        - CL_mappings/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-fw1_ceos_config:/mnt/flash/ceos-config:ro
+    site1-fw2:
+      group: arista
+      mgmt-ipv4: 10.14.14.85
+      startup-config: configs/arista-hosts.cfg
+      binds:
+        - CL_mappings/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-fw2_ceos_config:/mnt/flash/ceos-config:ro
+
+  # Site 1 
+    site1-spine1:
+      group: arista
+      mgmt-ipv4: 10.14.14.11
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7050CX3-32S_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-spine1_ceos_config:/mnt/flash/ceos-config:ro
+    site1-spine2:
+      group: arista
+      mgmt-ipv4: 10.14.14.12
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7050CX3-32S_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-spine2_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab1-leaf1a:
+      group: arista
+      mgmt-ipv4: 10.14.14.13
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab1-leaf1a_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab1-leaf1b:
+      group: arista
+      mgmt-ipv4: 10.14.14.14
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab1-leaf1b_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab2-leaf1a:
+      group: arista
+      mgmt-ipv4: 10.14.14.15
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab2-leaf1a_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab2-leaf1b:
+      group: arista
+      mgmt-ipv4: 10.14.14.16
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7050SX3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab2-leaf1b_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab2-access1:
+      group: arista
+      mgmt-ipv4: 10.14.14.19
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7010TX-48_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab2-access1_ceos_config:/mnt/flash/ceos-config:ro
+    site1-ab2-access2:
+      group: arista
+      mgmt-ipv4: 10.14.14.20
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7010TX-48_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-ab2-access2_ceos_config:/mnt/flash/ceos-config:ro
+    site1-border01:
+      group: arista
+      mgmt-ipv4: 10.14.14.21
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7280SR3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-border01_ceos_config:/mnt/flash/ceos-config:ro
+    site1-border02:
+      group: arista
+      mgmt-ipv4: 10.14.14.22
+      startup-config: configs/ceos-init.cfg
+      binds:
+        - CL_mappings/DCS-7280SR3-48YC8_EosIntfMapping.json:/mnt/flash/EosIntfMapping.json:ro
+        - CL_containerlab_onboarding_token:/mnt/flash/token:ro
+        - CL_configs/site1-border02_ceos_config:/mnt/flash/ceos-config:ro
+     
+  links:
+    # SITE 1
+    # Border
+    - endpoints: [ "site1-border01:eth1", "site1-border02:eth1" ]
+    - endpoints: [ "site1-border01:eth2", "site1-border02:eth2" ]
+    - endpoints: [ "site1-border01:eth3", "site1-spine1:eth5" ]
+    - endpoints: [ "site1-border01:eth4", "site1-spine2:eth5" ]
+    - endpoints: [ "site1-border02:eth3", "site1-spine1:eth6" ]
+    - endpoints: [ "site1-border02:eth4", "site1-spine2:eth6" ]
+    # FWs
+    - endpoints: [ "site1-border01:eth7", "site1-fw1:eth1" ]
+    - endpoints: [ "site1-border01:eth8", "site1-fw2:eth1" ]
+    - endpoints: [ "site1-border02:eth7", "site1-fw1:eth2" ]
+    - endpoints: [ "site1-border02:eth8", "site1-fw2:eth2" ]
+    # AB1 Leafs
+    - endpoints: [ "site1-ab1-leaf1a:eth3", "site1-spine1:eth1" ]
+    - endpoints: [ "site1-ab1-leaf1a:eth4", "site1-spine2:eth1" ]
+    - endpoints: [ "site1-ab1-leaf1b:eth3", "site1-spine1:eth2" ]
+    - endpoints: [ "site1-ab1-leaf1b:eth4", "site1-spine2:eth2" ]
+    - endpoints: [ "site1-ab1-leaf1a:eth1", "site1-ab1-leaf1b:eth1" ]
+    - endpoints: [ "site1-ab1-leaf1a:eth2", "site1-ab1-leaf1b:eth2" ]
+    # ADD CLIENTS
+    - endpoints: [ "site1-ab1-leaf1a:eth5", "site1-ab1-client1:eth1" ]
+    - endpoints: [ "site1-ab1-leaf1b:eth5", "site1-ab1-client2:eth1" ]
+    # AB2 Leafs
+    - endpoints: [ "site1-ab2-leaf1a:eth3", "site1-spine1:eth3" ]
+    - endpoints: [ "site1-ab2-leaf1a:eth4", "site1-spine2:eth3" ]
+    - endpoints: [ "site1-ab2-leaf1b:eth3", "site1-spine1:eth4" ]
+    - endpoints: [ "site1-ab2-leaf1b:eth4", "site1-spine2:eth4" ]
+    - endpoints: [ "site1-ab2-leaf1a:eth1", "site1-ab2-leaf1b:eth1" ]
+    - endpoints: [ "site1-ab2-leaf1a:eth2", "site1-ab2-leaf1b:eth2" ]
+    # AB2 Access
+    - endpoints: [ "site1-ab2-leaf1a:eth5", "site1-ab2-access1:eth1" ]
+    - endpoints: [ "site1-ab2-leaf1a:eth6", "site1-ab2-access2:eth1" ]
+    - endpoints: [ "site1-ab2-leaf1b:eth5", "site1-ab2-access1:eth2" ]
+    - endpoints: [ "site1-ab2-leaf1b:eth6", "site1-ab2-access2:eth2" ]
+    # ADD CLIENTS
+    - endpoints: [ "site1-ab2-access1:eth5", "site1-ab2-client1:eth1" ]
+    - endpoints: [ "site1-ab2-access2:eth5", "site1-ab2-client2:eth1" ]
